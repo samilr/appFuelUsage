@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="188dp"
+        tools:layout_editor_absoluteY="55dp"
+        android:background="@color/black">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="334dp"
+            android:layout_height="162dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="370dp"
+            android:background="@color/newColor2"
+            app:cardBackgroundColor="@color/newColor"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="DATOS"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/txbKmLitro"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="115dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/white"
+                android:hint="CONSUMO KM/L (KM)"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="72dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="260dp"
+                android:layout_marginTop="120dp" />
+
+            <EditText
+                android:id="@+id/txbDistancia"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="70dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/white"
+                android:hint="DISTANCIA RECORRIDA (KM)"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="334dp"
+            android:layout_height="277dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="60dp"
+            app:cardBackgroundColor="@color/newColor"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="4dp">
+
+            <TextView
+                android:id="@+id/txtResultados"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:text="RESULTADOS"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/txbKMG"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="60dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:hint="CONSUMO EN KM/G"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+            <EditText
+                android:id="@+id/txbMPG"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="100dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:hint="CONSUMO EN M/G"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+            <EditText
+                android:id="@+id/txbKPL"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="140dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:hint="CONSUMO EN KM/L"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+            <EditText
+                android:id="@+id/txbCombustibleUsado"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="180dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:hint="COMBUSTIBLE USADO"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+            <EditText
+                android:id="@+id/txbDineroGastado"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="220dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:hint="DINERO USADO"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnCalcular"
+            android:layout_width="334dp"
+            android:layout_height="61dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="570dp"
+            android:onClick="calcularConsumo"
+            android:text="CALCULAR"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnReinicar"
+            android:layout_width="334dp"
+            android:layout_height="61dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="625dp"
+            android:onClick="reiniciar"
+            android:text="REINICIAR"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
