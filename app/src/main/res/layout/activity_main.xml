@@ -15,7 +15,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="334dp"
-            android:layout_height="162dp"
+            android:layout_height="177dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="370dp"
             android:background="@color/newColor2"
@@ -31,47 +31,85 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="30dp"
-                android:textStyle="bold">
+                android:textStyle="bold"></TextView>
 
-            </TextView>
-
-            <EditText
-                android:id="@+id/txbKmLitro"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="115dp"
+            <TextView
+                android:id="@+id/txt7"
+                android:layout_width="108dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="129dp"
                 android:width="30dp"
                 android:height="10dp"
                 android:backgroundTint="@color/white"
-                android:hint="CONSUMO KM/L (KM)"
+                android:hint="CONSUMO:"
                 android:inputType="numberDecimal"
-                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txbKmLitro"
+                android:layout_width="102dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="110dp"
+                android:layout_marginTop="120dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/white"
+                android:textAlignment="center"
+                android:inputType="numberDecimal"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:maxLength="5"
                 android:textStyle="bold" />
 
             <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="72dp"
+                android:id="@+id/spUnit"
+                android:layout_width="112dp"
                 android:layout_height="37dp"
-                android:layout_marginLeft="260dp"
-                android:layout_marginTop="120dp" />
+                android:layout_marginLeft="210dp"
+                android:layout_marginTop="126dp" />
+
+            <TextView
+                android:id="@+id/txt6"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="80dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/white"
+                android:hint="DISTANCIA:"
+                android:inputType="numberDecimal"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/txbDistancia"
-                android:layout_width="match_parent"
+                android:layout_width="102dp"
                 android:layout_height="45dp"
+                android:layout_marginLeft="110dp"
                 android:layout_marginTop="70dp"
                 android:width="30dp"
                 android:height="10dp"
                 android:backgroundTint="@color/white"
-                android:hint="DISTANCIA RECORRIDA (KM)"
-                android:inputType="numberDecimal"
                 android:textAlignment="center"
+                android:inputType="numberDecimal"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
+                android:maxLength="5"
                 android:textStyle="bold" />
 
+            <Spinner
+                android:id="@+id/spDistancia"
+                android:layout_width="112dp"
+                android:layout_height="37dp"
+                android:layout_marginLeft="210dp"
+                android:layout_marginTop="76dp" />
 
         </androidx.cardview.widget.CardView>
 
@@ -97,75 +135,153 @@
 
             </TextView>
 
-            <EditText
-                android:id="@+id/txbKMG"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="177dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="60dp"
                 android:width="30dp"
                 android:height="10dp"
                 android:backgroundTint="@color/newColor"
-                android:hint="CONSUMO EN KM/G"
+                android:hint="CONSUMO EN KM/G:"
                 android:inputType="numberDecimal"
-                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
 
-            <EditText
-                android:id="@+id/txbMPG"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txbKMG"
+                android:layout_width="140dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="60dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:inputType="numberDecimal"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txt2"
+                android:layout_width="177dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="100dp"
                 android:width="30dp"
                 android:height="10dp"
                 android:backgroundTint="@color/newColor"
-                android:hint="CONSUMO EN M/G"
+                android:hint="CONSUMO EN MI/G:"
                 android:inputType="numberDecimal"
-                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
+            <TextView
+                android:id="@+id/txbMPG"
+                android:layout_width="140dp"
+                android:layout_marginLeft="190dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="100dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:hint=""
+                android:inputType="numberDecimal"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
 
-            <EditText
-                android:id="@+id/txbKPL"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
+            <TextView
+                android:id="@+id/txt3"
+                android:layout_width="177dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="140dp"
                 android:width="30dp"
                 android:height="10dp"
                 android:backgroundTint="@color/newColor"
-                android:hint="CONSUMO EN KM/L"
+                android:hint="CONSUMO EN KM/L:"
                 android:inputType="numberDecimal"
-                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
 
-            <EditText
-                android:id="@+id/txbCombustibleUsado"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
+            <TextView
+                android:id="@+id/txbKPL"
+                android:layout_width="140dp"
+                android:layout_marginLeft="190dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="140dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:hint=""
+                android:inputType="numberDecimal"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txt4"
+                android:layout_width="177dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="180dp"
                 android:width="30dp"
                 android:height="10dp"
                 android:backgroundTint="@color/newColor"
-                android:hint="COMBUSTIBLE USADO"
+                android:hint="GASOLINA USADA:"
                 android:inputType="numberDecimal"
-                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
 
-            <EditText
-                android:id="@+id/txbDineroGastado"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
+            <TextView
+                android:id="@+id/txbCombustibleUsado"
+                android:layout_width="140dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="180dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:inputType="numberDecimal"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txt5"
+                android:layout_width="177dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="220dp"
                 android:width="30dp"
                 android:height="10dp"
                 android:backgroundTint="@color/newColor"
-                android:hint="DINERO USADO"
+                android:hint="DINERO USADO:"
                 android:inputType="numberDecimal"
-                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txbDineroGastado"
+                android:layout_height="36dp"
+                android:layout_width="140dp"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="220dp"
+                android:width="30dp"
+                android:height="10dp"
+                android:backgroundTint="@color/newColor"
+                android:hint=""
+                android:inputType="numberDecimal"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
         </androidx.cardview.widget.CardView>
 
         <Button
@@ -173,8 +289,8 @@
             android:layout_width="334dp"
             android:layout_height="61dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="570dp"
-            android:onClick="calcularConsumo"
+            android:layout_marginTop="580dp"
+            android:onClick="calculateFuelUsed"
             android:text="CALCULAR"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -184,8 +300,8 @@
             android:layout_width="334dp"
             android:layout_height="61dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="625dp"
-            android:onClick="reiniciar"
+            android:layout_marginTop="645dp"
+            android:onClick="restartApp"
             android:text="REINICIAR"
             android:textSize="20dp"
             android:textStyle="bold" />

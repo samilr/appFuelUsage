@@ -4,79 +4,120 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    EditText txbMpg, txbKpg, txbDistanciaRecorrida, txbKMLitros, txbCombustibleUsado, txbDineroGastado, txbKPL;
+    EditText txbDistance, txbKmByLitros;
+    TextView txbMillesByGal, txbKilometerByGal, txbfuelUsed, txbMoneyUsed, txbKilometerByLiters;
+    Spinner spMesureUnity, spDistanceUnity;
     Button btnCalcular;
-    double KMPG, KMPL, MPG, distancia, dineroGastado, combustibleUsado, litrosToKM = 3.785411784, kmToMillas = 0.621371;
-    List<String> mesureUnity = Arrays.asList("Desayuno", "Almuerzo", "Merienda", "Cena", "Chatarra");
+    double averageFuelUsed, millesByGal, distance, moneyUsedByGas, usedFuel, kilometerByGal, litersKilometersToGalon = 3.785411784, kilometerToMilles = 0.621371, millesToKilometer = 1.60934, kilometerByLiters;
+    List<String> mesureUnity = Arrays.asList("(KM/L)", "(KM/G)", "(MI/G)", "(GAL)");
+    List<String> distanceUnity = Arrays.asList("(KM)", "(MI)");
+    String mesureUnityChoseen, distanceUnityChoosen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        String foodChoosen;
-        inicialiced();
-
+        appComponets();
     }
 
-    public void inicialiced(){
-        txbMpg = findViewById(R.id.txbMPG);
-        txbKpg = findViewById(R.id.txbKMG);
-        txbDistanciaRecorrida = findViewById(R.id.txbDistancia);
-        txbKMLitros = findViewById(R.id.txbKmLitro);
+    public void appComponets(){
+        txbMillesByGal = findViewById(R.id.txbMPG);
+        txbKilometerByGal = findViewById(R.id.txbKMG);
+        txbDistance = findViewById(R.id.txbDistancia);
+        txbKmByLitros = findViewById(R.id.txbKmLitro);
         btnCalcular = findViewById(R.id.btnCalcular);
-        txbCombustibleUsado = findViewById(R.id.txbCombustibleUsado);
-        txbDineroGastado = findViewById(R.id.txbDineroGastado);
-        txbKPL = findViewById(R.id.txbKPL);
-        txbKpg.setEnabled(false);
-        txbMpg.setEnabled(false);
-        txbCombustibleUsado.setEnabled(false);
-        txbDineroGastado.setEnabled(false);
-        txbKPL.setEnabled(false);
+        txbfuelUsed = findViewById(R.id.txbCombustibleUsado);
+        txbMoneyUsed = findViewById(R.id.txbDineroGastado);
+        spMesureUnity = findViewById(R.id.spUnit);
+        spDistanceUnity = findViewById(R.id.spDistancia);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                R.layout.spinner_item, mesureUnity);
+        spMesureUnity.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this,
+                R.layout.spinner_item, distanceUnity);
+        spDistanceUnity.setAdapter(adapter2);
+
+        txbKilometerByLiters = findViewById(R.id.txbKPL);
+        txbKilometerByGal.setEnabled(false);
+        txbMillesByGal.setEnabled(false);
+        txbfuelUsed.setEnabled(false);
+        txbMoneyUsed.setEnabled(false);
+        txbKilometerByLiters.setEnabled(false);
     }
-    public void calcularConsumo(View view){
-        if (txbDistanciaRecorrida.getText().toString().isEmpty() && txbKMLitros.getText().toString().isEmpty() || txbKMLitros.getText().toString().isEmpty() || txbDistanciaRecorrida.getText().toString().isEmpty()){
+    public void calculateFuelUsed(View view){
+        if (txbDistance.getText().toString().isEmpty() && txbKmByLitros.getText().toString().isEmpty()
+                || txbKmByLitros.getText().toString().isEmpty() || txbDistance.getText().toString().isEmpty()){
             Toast.makeText(this, "Complete los campos para calcular", Toast.LENGTH_SHORT).show();
         }else {
-            distancia = Double.parseDouble(txbDistanciaRecorrida.getText().toString());
-            KMPL = Double.parseDouble(txbKMLitros.getText().toString());
-            KMPG = KMPL * litrosToKM;
-            MPG = KMPG * kmToMillas;
-            combustibleUsado = distancia / KMPG;
-            dineroGastado = combustibleUsado * 293.60;
+            distance = Double.parseDouble(txbDistance.getText().toString());
+            averageFuelUsed = Double.parseDouble(txbKmByLitros.getText().toString());
+            mesureUnityChoseen = spMesureUnity.getSelectedItem().toString();
+            distanceUnityChoosen = spDistanceUnity.getSelectedItem().toString();
 
-            txbKpg.setText(String.format("%.2f", KMPG)+ " KM/G");
-            txbMpg.setText(String.format("%.2f", MPG) + " M/G");
-            txbKPL.setText(String.format("%.2f", KMPL) + " KM/L");
-            txbCombustibleUsado.setText(String.format("%.2f", combustibleUsado) + " GALONES");
-            txbDineroGastado.setText("$"+String.format("%.2f", dineroGastado) + " DOP");
 
-            txbDistanciaRecorrida.setText("");
-            txbDistanciaRecorrida.setHint(distancia + " KM RECORRIDOS");
-
-            txbKMLitros.setText("");
-            txbKMLitros.setHint(KMPL + " KM/L");
+            if (Objects.equals(distanceUnityChoosen, "(MI)")){
+                distance *= millesToKilometer;
+            }
+            switch (mesureUnityChoseen){
+                case "(KM/L)":
+                    getData(distance, averageFuelUsed);
+                    break;
+                case "(KM/G)":
+                    averageFuelUsed /= litersKilometersToGalon;
+                    getData(distance, averageFuelUsed);
+                    break;
+                case "(MI/G)":
+                    averageFuelUsed *= millesToKilometer;
+                    averageFuelUsed /= litersKilometersToGalon;
+                    getData(distance, averageFuelUsed);
+                    break;
+                case "(GAL)":
+                    averageFuelUsed = distance / averageFuelUsed;
+                    averageFuelUsed /= litersKilometersToGalon;
+                    getData(distance, averageFuelUsed);
+                    break;
+            }
         }
     }
-    public void reiniciar(View view){
-        txbKpg.setText("");
-        txbMpg.setText("");
-        txbKPL.setText("");
-        txbCombustibleUsado.setText("");
-        txbDineroGastado.setText("");
-        txbDistanciaRecorrida.setText("");
-        txbKMLitros.setText("");
-        txbKMLitros.setHint("CONSUMO KM/L (KM)");
-        txbDistanciaRecorrida.setHint("DISTANCIA RECORRIDA (KM)");
-    }
 
+    public void getData(double distanceAverage, double fuelUsedAverage){
+        averageFuelUsed = fuelUsedAverage;
+        distance = distanceAverage;
+        kilometerByLiters = averageFuelUsed;
+
+        kilometerByGal = averageFuelUsed * litersKilometersToGalon;
+        millesByGal = kilometerByGal * kilometerToMilles;
+        usedFuel = distance / kilometerByGal;
+        moneyUsedByGas = usedFuel * 293.60;
+
+        txbKilometerByGal.setText(String.format("%.2f", kilometerByGal)+ " KM/G");
+        txbMillesByGal.setText(String.format("%.2f", millesByGal) + " MI/G");
+        txbKilometerByLiters.setText(String.format("%.2f", kilometerByLiters) + " KM/L");
+        txbfuelUsed.setText(String.format("%.2f", usedFuel) + " GAL");
+        txbMoneyUsed.setText("$"+String.format("%.2f", moneyUsedByGas));
+    }
+    public void restartApp(View view){
+        txbKilometerByGal.setText("");
+        txbMillesByGal.setText("");
+        txbKilometerByLiters.setText("");
+        txbfuelUsed.setText("");
+        txbMoneyUsed.setText("");
+        txbDistance.setText("");
+        txbKmByLitros.setText("");
+    }
 
 }
