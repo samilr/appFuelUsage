@@ -1,27 +1,16 @@
 package com.example.used_fuel;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.graphics.pdf.PdfDocument;
 import android.os.Environment;
-import android.text.TextPaint;
-import android.widget.Toast;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -29,24 +18,28 @@ import java.util.Date;
 
 public class GeneratePDF {
 
+    private String _distanciaRecorridaKM;
+    private String _distanciaRecorridaMI;
     private String _consumoKMG;
     private String _consumoMIG;
     private String _consumoKML;
-    private String _combustibleUsado;
+    private String _combustibleUsadoGalones;
+    private String _combustibleUsadoLitros;
     private String _dineroUsado;
     private Date _currentDate;
     private String pdfFileName;
 
     String currrentDate;
-    public GeneratePDF(String consumoKM_G, String consumoMI_G, String consumoKM_L, String combustibleUsado, String dineroUsado){
+    public GeneratePDF(String distanciaRecorridaKM, String distanciaRecorridaMI, String consumoKM_G, String consumoMI_G, String consumoKM_L, String combustibleUsado, String usedFuelLiters, String dineroUsado){
+        this._distanciaRecorridaKM = distanciaRecorridaKM;
+        this._distanciaRecorridaMI = distanciaRecorridaMI;
         this._consumoKMG =  consumoKM_G;
         this._consumoMIG = consumoMI_G;
         this._consumoKML = consumoKM_L;
-        this._combustibleUsado = combustibleUsado;
+        this._combustibleUsadoGalones = combustibleUsado;
+        this._combustibleUsadoLitros = usedFuelLiters;
         this._dineroUsado = dineroUsado;
         this._currentDate = new Date();
-
-        //MainActivity mainActivity = new MainActivity();
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         currrentDate = format.format(_currentDate);
@@ -55,7 +48,7 @@ public class GeneratePDF {
     public void generatePDF(){
         Document document = new Document();
         try {
-            this.pdfFileName = "CONSUMO_DE_COMBUSTIBLE_" + currrentDate;
+            this.pdfFileName = "REPORTE DE CONSUMO " + currrentDate;
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.used_fuel/files/" + this.pdfFileName + ".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(path));
             PdfPTable table = new PdfPTable(2);
@@ -78,6 +71,12 @@ public class GeneratePDF {
             table.addCell("FECHA:");
             table.addCell(currrentDate);
 
+            table.addCell("DISTANCIA RECORRIDA (KM):");
+            table.addCell(_distanciaRecorridaKM + " KM");
+
+            table.addCell("DISTANCIA RECORRIDA (MI):");
+            table.addCell(_distanciaRecorridaMI + " MI");
+
             table.addCell("CONSUMO KM/G:");
             table.addCell(_consumoKMG + " KM/G");
 
@@ -87,8 +86,11 @@ public class GeneratePDF {
             table.addCell("CONSUMO KM/L:");
             table.addCell(_consumoKML + " KM/L");
 
-            table.addCell("COMBUSTIBLE USADO:");
-            table.addCell(_combustibleUsado + " GALONES");
+            table.addCell("COMBUSTIBLE USADO (GAL):");
+            table.addCell(_combustibleUsadoGalones + " GALONES");
+
+            table.addCell("COMBUSTIBLE USADO (LI):");
+            table.addCell(_combustibleUsadoLitros + " LITROS");
 
             table.addCell("DINERO USADO:");
             table.addCell("RD$ " + _dineroUsado + " DOP");
