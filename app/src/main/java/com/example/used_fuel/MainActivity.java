@@ -66,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
         txbKilometerByLiters.setEnabled(false);
     }
     public void calculateFuelUsed(View view){
-        if (txbDistance.getText().toString().isEmpty() && txbKmByLitros.getText().toString().isEmpty()
-                || txbKmByLitros.getText().toString().isEmpty() || txbDistance.getText().toString().isEmpty()){
+        if (isInputEmpty()){
             Toast.makeText(this, "Complete los campos para calcular", Toast.LENGTH_SHORT).show();
-        }else {
+        }
+        else {
             distance = Double.parseDouble(txbDistance.getText().toString());
             averageFuelUsed = Double.parseDouble(txbKmByLitros.getText().toString());
             mesureUnityChoseen = spMesureUnity.getSelectedItem().toString();
@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
     public void getData(double distanceAverage, double fuelUsedAverage){
         averageFuelUsed = fuelUsedAverage;
         distance = distanceAverage;
@@ -128,15 +127,19 @@ public class MainActivity extends AppCompatActivity {
         txbKmByLitros.setText("");
     }
     public void makePdf(View view){
-        formatValues();
-        GeneratePDF classGeneratePdf = new GeneratePDF(String.valueOf(kilometerByGal), String.valueOf(millesByGal), String.valueOf(kilometerByLiters), String.valueOf(usedFuel), String.valueOf(moneyUsed));
+        if (isInputEmpty()){
+            Toast.makeText(this, "Complete los campos para continuar", Toast.LENGTH_SHORT).show();
+        }else{
+            formatValues();
+            GeneratePDF classGeneratePdf = new GeneratePDF(String.valueOf(kilometerByGal), String.valueOf(millesByGal), String.valueOf(kilometerByLiters), String.valueOf(usedFuel), String.valueOf(moneyUsed));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
-            classGeneratePdf.generatePDF();
-            sharePdf(classGeneratePdf);
-        } else {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
+                classGeneratePdf.generatePDF();
+                sharePdf(classGeneratePdf);
+            } else {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivity(intent);
+            }
         }
     }
     public void formatValues(){
@@ -155,5 +158,12 @@ public class MainActivity extends AppCompatActivity {
         compartirIntent.putExtra(Intent.EXTRA_STREAM, uri);
         startActivity(Intent.createChooser(compartirIntent, "Compartir archivo PDF"));
     }
-
+    public boolean isInputEmpty(){
+        if (txbDistance.getText().toString().isEmpty() && txbKmByLitros.getText().toString().isEmpty()
+                || txbKmByLitros.getText().toString().isEmpty() || txbDistance.getText().toString().isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
