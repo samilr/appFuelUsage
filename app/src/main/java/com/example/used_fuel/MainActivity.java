@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         txbKmByLitros.setText("");
     }
     public void makePdf(View view){
-        if (isInputEmpty()){
+        if (isDataEmpty()){
             Toast.makeText(this, "Complete los campos para continuar", Toast.LENGTH_SHORT).show();
         }else{
             formatValues();
@@ -163,6 +163,14 @@ public class MainActivity extends AppCompatActivity {
                 || txbKmByLitros.getText().toString().isEmpty() || txbDistance.getText().toString().isEmpty()){
             return true;
         }else {
+            return false;
+        }
+    }
+    public boolean isDataEmpty(){
+        if (txbMillesByGal.getText().toString().isEmpty() && txbKilometerByGal.getText().toString().isEmpty()
+                && txbfuelUsed.getText().toString().isEmpty() && txbMoneyUsed.getText().toString().isEmpty() && txbKilometerByLiters.getText().toString().isEmpty()){
+            return true;
+        }else{
             return false;
         }
     }

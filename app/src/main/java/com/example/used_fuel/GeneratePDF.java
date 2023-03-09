@@ -1,12 +1,12 @@
 package com.example.used_fuel;
 
 import android.os.Environment;
+import android.widget.Toast;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -31,6 +31,8 @@ public class GeneratePDF {
         this._dineroUsado = dineroUsado;
         this._currentDate = new Date();
 
+        //MainActivity mainActivity = new MainActivity();
+
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         currrentDate = format.format(_currentDate);
     }
@@ -50,15 +52,12 @@ public class GeneratePDF {
 
             // Agrega los datos de las variables
             document.add(new Paragraph("Fecha: " + currrentDate));
-            document.add(new Paragraph("Consumo KM/G: " +  _consumoKMG));
-            document.add(new Paragraph("Consumo MI/G: " + _consumoMIG));
-            document.add(new Paragraph("Consumo KM/L: " + _consumoKML));
-            document.add(new Paragraph("Combustible usado: " + _combustibleUsado));
-            document.add(new Paragraph("Dinero usado: $" + _dineroUsado));
-
+            document.add(new Paragraph("CONSUMO KM/G: " +  _consumoKMG + " KM/G"));
+            document.add(new Paragraph("CONSUMO MI/G: " + _consumoMIG + " MI/G"));
+            document.add(new Paragraph("CONSUMO KM/L: " + _consumoKML + " KM/L"));
+            document.add(new Paragraph("COMBUSTIBLE USADO: " + _combustibleUsado + " GALONES"));
+            document.add(new Paragraph("DINERO USADO: RD$" + _dineroUsado + " DOP"));
             document.close();
-
-          this.pdfFileName = "CONSUMO_DE_COMBUSTIBLE_" + currrentDate;
 
         }catch (SecurityException | FileNotFoundException e){
             e.printStackTrace();
