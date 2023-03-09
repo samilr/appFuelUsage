@@ -288,7 +288,7 @@
 
         <Button
             android:id="@+id/btnCalcular"
-            android:layout_width="334dp"
+            android:layout_width="161dp"
             android:layout_height="61dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="580dp"
@@ -298,13 +298,25 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnReinicar"
+            android:id="@+id/btnGuardar"
+            android:layout_width="161dp"
+            android:layout_height="61dp"
+            android:layout_marginLeft="197dp"
+            android:layout_marginTop="580dp"
+            android:onClick="restartApp"
+            android:text="REINICIAR"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/btnPdf"
             android:layout_width="334dp"
             android:layout_height="61dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="645dp"
-            android:onClick="restartApp"
-            android:text="REINICIAR"
+            android:onClick="makePdf"
+            android:text="PDF"
             android:textSize="20dp"
             android:textStyle="bold" />
     </FrameLayout>
