@@ -118,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
         txbfuelUsed.setText(usedFuelGal + " GAL");
         txbMoneyUsed.setText("$" + moneyUsed + " DOP");
     }
+
+    public void SaveData(){
+        formatValues();
+        FuelRecord fuelRecord = new FuelRecord(String.valueOf(distance), String.valueOf(distanceMI), String.valueOf(kilometerByGal), String.valueOf(millesByGal), String.valueOf(kilometerByLiters), String.valueOf(usedFuelGal), String.valueOf(usedFuelLiters), String.valueOf(moneyUsed));
+
+
+    }
     public void restartApp(View view){
         txbKilometerByGal.setText("");
         txbMillesByGal.setText("");

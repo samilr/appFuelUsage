@@ -72,19 +72,19 @@ public class GeneratePDF {
             table.addCell(currrentDate);
 
             table.addCell("DISTANCIA RECORRIDA (KM):");
-            table.addCell(_distanciaRecorridaKM + " KM");
+            table.addCell(_distanciaRecorridaKM + " Kilometros");
 
             table.addCell("DISTANCIA RECORRIDA (MI):");
-            table.addCell(_distanciaRecorridaMI + " MI");
+            table.addCell(_distanciaRecorridaMI + " Millas");
 
             table.addCell("CONSUMO KM/G:");
-            table.addCell(_consumoKMG + " KM/G");
+            table.addCell(_consumoKMG + " Kilometros por Galon");
 
             table.addCell("CONSUMO MI/G:");
-            table.addCell(_consumoMIG + " MI/G");
+            table.addCell(_consumoMIG + " Millas por Galon");
 
             table.addCell("CONSUMO KM/L:");
-            table.addCell(_consumoKML + " KM/L");
+            table.addCell(_consumoKML + " Kilometros por Litros");
 
             table.addCell("COMBUSTIBLE USADO (GAL):");
             table.addCell(_combustibleUsadoGalones + " GALONES");
