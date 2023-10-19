@@ -117,12 +117,10 @@ public class MainActivity extends AppCompatActivity {
         averageFuelUsed = fuelUsedAverage;
         distance = distanceAverage;
         kilometerByLiters = averageFuelUsed;
-
         kilometerByGal = averageFuelUsed * litersKilometersToGalon;
         millesByGal = kilometerByGal * kilometerToMilles;
         usedFuelGal = distance / kilometerByGal;
         usedFuelLiters = distance / kilometerByLiters;
-
         formatValues();
 
         switch (gasUnityChoseen){
@@ -157,7 +155,17 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Complete los campos para continuar", Toast.LENGTH_SHORT).show();
         }else{
             formatValues();
-            GeneratePDF classGeneratePdf = new GeneratePDF(String.valueOf(distance), String.valueOf(distanceMI), String.valueOf(kilometerByGal), String.valueOf(millesByGal), String.valueOf(kilometerByLiters), String.valueOf(usedFuelGal), String.valueOf(usedFuelLiters), String.valueOf(moneyUsed), String.valueOf(gasPriceByGal), String.valueOf(gasPriceByLiter));
+            GeneratePDF classGeneratePdf = new GeneratePDF(
+                    String.valueOf(distance),
+                    String.valueOf(distanceMI),
+                    String.valueOf(kilometerByGal),
+                    String.valueOf(millesByGal),
+                    String.valueOf(kilometerByLiters),
+                    String.valueOf(usedFuelGal),
+                    String.valueOf(usedFuelLiters),
+                    String.valueOf(moneyUsed),
+                    String.valueOf(gasPriceByGal),
+                    String.valueOf(gasPriceByLiter));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
                 classGeneratePdf.generatePDF();
@@ -202,18 +210,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(compartirIntent, "Compartir archivo PDF"));
     }
     public boolean isInputEmpty(){
-        if (txbDistance.getText().toString().isEmpty() || txbKmByLitros.getText().toString().isEmpty() || txbPrice.getText().toString().isEmpty()){
-            return true;
-        }else {
-            return false;
-        }
+        return txbDistance.getText().toString().isEmpty()
+                || txbKmByLitros.getText().toString().isEmpty()
+                || txbPrice.getText().toString().isEmpty();
     }
     public boolean isDataEmpty(){
-        if (txbMillesByGal.getText().toString().isEmpty() || txbKilometerByGal.getText().toString().isEmpty()
-                || txbfuelUsed.getText().toString().isEmpty() || txbMoneyUsed.getText().toString().isEmpty() || txbKilometerByLiters.getText().toString().isEmpty()){
-            return true;
-        }else{
-            return false;
-        }
+            return txbMillesByGal.getText().toString().isEmpty()
+                    || txbKilometerByGal.getText().toString().isEmpty()
+                    || txbfuelUsed.getText().toString().isEmpty()
+                    || txbMoneyUsed.getText().toString().isEmpty()
+                    || txbKilometerByLiters.getText().toString().isEmpty();
     }
 }
