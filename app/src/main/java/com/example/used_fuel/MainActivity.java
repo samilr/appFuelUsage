@@ -1,8 +1,9 @@
 package com.example.used_fuel;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -21,24 +22,24 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
 public class MainActivity extends AppCompatActivity {
-    EditText txbDistance, txbKmByLitros;
+    EditText txbDistance, txbKmByLitros, txbPrice;
     TextView txbMillesByGal, txbKilometerByGal, txbfuelUsed, txbMoneyUsed, txbKilometerByLiters;
-    Spinner spMesureUnity, spDistanceUnity;
+    Spinner spMesureUnity, spDistanceUnity, spGasUnity;
     Button btnCalcular, btnPdf;
     double averageFuelUsed, usedFuelLiters, millesByGal, distance, distanceMI, moneyUsed, usedFuelGal, kilometerByGal, kilometerByLiters;
-    double litersKilometersToGalon = 3.785411784, kilometerToMilles = 0.621371, millesToKilometer = 1.60934;
+    double litersKilometersToGalon = 3.785411784, kilometerToMilles = 0.621371, millesToKilometer = 1.60934, gasPriceByGal, gasPriceByLiter = gasPriceByGal / litersKilometersToGalon;
     List<String> mesureUnity = Arrays.asList("(KM/L)", "(KM/G)", "(MI/G)", "(GAL)");
     List<String> distanceUnity = Arrays.asList("(KM)", "(MI)");
-    String mesureUnityChoseen, distanceUnityChoosen;
-
+    List<String> gasUnity = Arrays.asList("(GAL)", "(LI)");
+    String mesureUnityChoseen, distanceUnityChoosen, gasUnityChoseen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         appComponets();
     }
+    @SuppressLint("DefaultLocale")
     public void appComponets(){
         txbMillesByGal = findViewById(R.id.txbMPG);
         txbKilometerByGal = findViewById(R.id.txbKMG);
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         spMesureUnity = findViewById(R.id.spUnit);
         spDistanceUnity = findViewById(R.id.spDistancia);
         btnPdf = findViewById(R.id.btnPdf);
+        txbPrice = findViewById(R.id.txbPrice);
+        spGasUnity = findViewById(R.id.spGasUnity);
+        txbPrice.setText(String.valueOf(gasPriceByGal));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.spinner_item, mesureUnity);
@@ -59,12 +63,20 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.spinner_item, distanceUnity);
         spDistanceUnity.setAdapter(adapter2);
 
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this,
+                R.layout.spinner_item, gasUnity);
+        spGasUnity.setAdapter(adapter3);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar_layout);
+
         txbKilometerByLiters = findViewById(R.id.txbKPL);
         txbKilometerByGal.setEnabled(false);
         txbMillesByGal.setEnabled(false);
         txbfuelUsed.setEnabled(false);
         txbMoneyUsed.setEnabled(false);
         txbKilometerByLiters.setEnabled(false);
+        txbPrice.setText("293.10");
     }
     public void calculateFuelUsed(View view){
         if (isInputEmpty()){
@@ -75,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             averageFuelUsed = Double.parseDouble(txbKmByLitros.getText().toString());
             mesureUnityChoseen = spMesureUnity.getSelectedItem().toString();
             distanceUnityChoosen = spDistanceUnity.getSelectedItem().toString();
+            gasUnityChoseen = spGasUnity.getSelectedItem().toString();
 
             if (Objects.equals(distanceUnityChoosen, "(MI)")){
                 distance *= millesToKilometer;
@@ -108,22 +121,26 @@ public class MainActivity extends AppCompatActivity {
         kilometerByGal = averageFuelUsed * litersKilometersToGalon;
         millesByGal = kilometerByGal * kilometerToMilles;
         usedFuelGal = distance / kilometerByGal;
-        moneyUsed = usedFuelGal * 293.60;
+        usedFuelLiters = distance / kilometerByLiters;
 
         formatValues();
 
+        switch (gasUnityChoseen){
+            case "(GAL)":
+                txbfuelUsed.setText(usedFuelGal + " GALONES");
+                break;
+            case "(LI)":
+                txbfuelUsed.setText(usedFuelLiters + " LITROS");
+                break;
+        }
         txbKilometerByGal.setText(kilometerByGal+ " KM/G");
         txbMillesByGal.setText(millesByGal + " MI/G");
         txbKilometerByLiters.setText(kilometerByLiters + " KM/L");
-        txbfuelUsed.setText(usedFuelGal + " GAL");
         txbMoneyUsed.setText("$" + moneyUsed + " DOP");
     }
-
     public void SaveData(){
         formatValues();
         FuelRecord fuelRecord = new FuelRecord(String.valueOf(distance), String.valueOf(distanceMI), String.valueOf(kilometerByGal), String.valueOf(millesByGal), String.valueOf(kilometerByLiters), String.valueOf(usedFuelGal), String.valueOf(usedFuelLiters), String.valueOf(moneyUsed));
-
-
     }
     public void restartApp(View view){
         txbKilometerByGal.setText("");
@@ -133,13 +150,14 @@ public class MainActivity extends AppCompatActivity {
         txbMoneyUsed.setText("");
         txbDistance.setText("");
         txbKmByLitros.setText("");
+        txbPrice.setText("293.10");
     }
     public void makePdf(View view){
         if (isDataEmpty()){
             Toast.makeText(this, "Complete los campos para continuar", Toast.LENGTH_SHORT).show();
         }else{
             formatValues();
-            GeneratePDF classGeneratePdf = new GeneratePDF(String.valueOf(distance), String.valueOf(distanceMI), String.valueOf(kilometerByGal), String.valueOf(millesByGal), String.valueOf(kilometerByLiters), String.valueOf(usedFuelGal), String.valueOf(usedFuelLiters), String.valueOf(moneyUsed));
+            GeneratePDF classGeneratePdf = new GeneratePDF(String.valueOf(distance), String.valueOf(distanceMI), String.valueOf(kilometerByGal), String.valueOf(millesByGal), String.valueOf(kilometerByLiters), String.valueOf(usedFuelGal), String.valueOf(usedFuelLiters), String.valueOf(moneyUsed), String.valueOf(gasPriceByGal), String.valueOf(gasPriceByLiter));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
                 classGeneratePdf.generatePDF();
@@ -152,7 +170,18 @@ public class MainActivity extends AppCompatActivity {
     }
     public void formatValues(){
         distanceMI = distance * kilometerToMilles;
-        usedFuelLiters = usedFuelGal * litersKilometersToGalon;
+
+        if ("(GAL)".equals(gasUnityChoseen)) {
+            gasPriceByGal = Double.parseDouble(txbPrice.getText().toString());
+            gasPriceByLiter = gasPriceByGal / litersKilometersToGalon;
+            moneyUsed = usedFuelGal * gasPriceByGal;
+            txbfuelUsed.setText(usedFuelGal + " GALONES");
+        } else {
+            gasPriceByLiter = Double.parseDouble(txbPrice.getText().toString());
+            gasPriceByGal = gasPriceByLiter * litersKilometersToGalon;
+            moneyUsed = usedFuelLiters * gasPriceByLiter;
+            txbfuelUsed.setText(usedFuelLiters + " LITROS");
+        }
 
         distanceMI = Double.parseDouble(String.format("%.2f", distanceMI));
         usedFuelLiters = Double.parseDouble(String.format("%.2f", usedFuelLiters));
@@ -160,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         millesByGal = Double.parseDouble(String.format("%.2f", millesByGal));
         kilometerByLiters = Double.parseDouble(String.format("%.2f", kilometerByLiters));
         usedFuelGal = Double.parseDouble(String.format("%.2f", usedFuelGal));
+        usedFuelLiters = Double.parseDouble(String.format("%.2f", usedFuelLiters));
         moneyUsed = Double.parseDouble(String.format("%.2f", moneyUsed));
     }
     public void sharePdf(GeneratePDF generatePDF) {
@@ -172,16 +202,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(compartirIntent, "Compartir archivo PDF"));
     }
     public boolean isInputEmpty(){
-        if (txbDistance.getText().toString().isEmpty() && txbKmByLitros.getText().toString().isEmpty()
-                || txbKmByLitros.getText().toString().isEmpty() || txbDistance.getText().toString().isEmpty()){
+        if (txbDistance.getText().toString().isEmpty() || txbKmByLitros.getText().toString().isEmpty() || txbPrice.getText().toString().isEmpty()){
             return true;
         }else {
             return false;
         }
     }
     public boolean isDataEmpty(){
-        if (txbMillesByGal.getText().toString().isEmpty() && txbKilometerByGal.getText().toString().isEmpty()
-                && txbfuelUsed.getText().toString().isEmpty() && txbMoneyUsed.getText().toString().isEmpty() && txbKilometerByLiters.getText().toString().isEmpty()){
+        if (txbMillesByGal.getText().toString().isEmpty() || txbKilometerByGal.getText().toString().isEmpty()
+                || txbfuelUsed.getText().toString().isEmpty() || txbMoneyUsed.getText().toString().isEmpty() || txbKilometerByLiters.getText().toString().isEmpty()){
             return true;
         }else{
             return false;

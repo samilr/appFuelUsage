@@ -28,9 +28,11 @@ public class GeneratePDF {
     private String _dineroUsado;
     private Date _currentDate;
     private String pdfFileName;
+    private String _priceByGal;
+    private String _priceByLiter;
 
     String currrentDate;
-    public GeneratePDF(String distanciaRecorridaKM, String distanciaRecorridaMI, String consumoKM_G, String consumoMI_G, String consumoKM_L, String combustibleUsado, String usedFuelLiters, String dineroUsado){
+    public GeneratePDF(String distanciaRecorridaKM, String distanciaRecorridaMI, String consumoKM_G, String consumoMI_G, String consumoKM_L, String combustibleUsado, String usedFuelLiters, String dineroUsado, String priceByGal, String priceByLiter){
         this._distanciaRecorridaKM = distanciaRecorridaKM;
         this._distanciaRecorridaMI = distanciaRecorridaMI;
         this._consumoKMG =  consumoKM_G;
@@ -39,6 +41,8 @@ public class GeneratePDF {
         this._combustibleUsadoGalones = combustibleUsado;
         this._combustibleUsadoLitros = usedFuelLiters;
         this._dineroUsado = dineroUsado;
+        this._priceByGal = priceByGal;
+        this._priceByLiter = priceByLiter;
         this._currentDate = new Date();
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -94,6 +98,12 @@ public class GeneratePDF {
 
             table.addCell("DINERO USADO:");
             table.addCell("RD$ " + _dineroUsado + " DOP");
+
+            table.addCell("PRECIO POR GALON:");
+            table.addCell("RD$ " + _priceByGal + " DOP");
+
+            table.addCell("PRECIO POR LITRO:");
+            table.addCell("RD$ " + _priceByLiter + " DOP");
 
             document.add(table);
             document.close();
