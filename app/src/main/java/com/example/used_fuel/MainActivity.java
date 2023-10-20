@@ -3,7 +3,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         appComponets();
     }
-    @SuppressLint("DefaultLocale")
+
     public void appComponets(){
         txbMillesByGal = findViewById(R.id.txbMPG);
         txbKilometerByGal = findViewById(R.id.txbKMG);
@@ -111,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     getData(distance, averageFuelUsed);
                     break;
             }
+            saveData(this.getCurrentFocus());
         }
     }
     public void getData(double distanceAverage, double fuelUsedAverage){
@@ -136,9 +136,27 @@ public class MainActivity extends AppCompatActivity {
         txbKilometerByLiters.setText(kilometerByLiters + " KM/L");
         txbMoneyUsed.setText("$" + moneyUsed + " DOP");
     }
-    public void SaveData(){
-        formatValues();
-        FuelRecord fuelRecord = new FuelRecord(String.valueOf(distance), String.valueOf(distanceMI), String.valueOf(kilometerByGal), String.valueOf(millesByGal), String.valueOf(kilometerByLiters), String.valueOf(usedFuelGal), String.valueOf(usedFuelLiters), String.valueOf(moneyUsed));
+    public void saveData(View view){
+        if (isDataEmpty()){
+            Toast.makeText(this, "Complete los campos para continuar", Toast.LENGTH_SHORT).show();
+        }else{
+            formatValues();
+            SaveFuelDataRecord saveFuelDataRecord = new SaveFuelDataRecord(
+                    String.valueOf(distance),
+                    String.valueOf(distanceMI),
+                    String.valueOf(kilometerByGal),
+                    String.valueOf(millesByGal),
+                    String.valueOf(kilometerByLiters),
+                    String.valueOf(usedFuelGal),
+                    String.valueOf(usedFuelLiters),
+                    String.valueOf(moneyUsed),
+                    String.valueOf(gasPriceByGal),
+                    String.valueOf(gasPriceByLiter));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
+                saveFuelDataRecord.saveDataAsJSON();
+                Toast.makeText(this, "Guardado correctamente.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     public void restartApp(View view){
         txbKilometerByGal.setText("");
