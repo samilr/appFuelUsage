@@ -40,7 +40,7 @@ public class SaveFuelDataRecord {
         String jsonData = gson.toJson(this);
 
         try {
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.used_fuel/files/consumption_history.json";
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.used_fuel/files/fuel_record.json";
             File file = new File(path);
             boolean fileExists = file.exists();
             FileWriter fileWriter = new FileWriter(path, fileExists);
