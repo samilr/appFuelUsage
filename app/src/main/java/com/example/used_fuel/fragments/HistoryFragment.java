@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -30,7 +31,7 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.history, container, false);
         List<FuelRecord> fuelRecords = readJsonFile();
-
+        Collections.sort(fuelRecords);
         RecyclerView recyclerView = rootView.findViewById(R.id.rvHistory);
         FuelRecordAdapter adapter = new FuelRecordAdapter(fuelRecords);
         recyclerView.setAdapter(adapter);
@@ -42,6 +43,7 @@ public class HistoryFragment extends Fragment {
             public void onRefresh() {
                 // Realiza la operación de recarga de datos aquí, por ejemplo, volver a leer el archivo JSON
                 List<FuelRecord> refreshedData = readJsonFile();
+                Collections.sort(refreshedData);
                 adapter.setData(refreshedData);
                 adapter.notifyDataSetChanged();
                 Toast.makeText(requireContext(), "Datos actualizados.", Toast.LENGTH_SHORT).show();
@@ -51,8 +53,6 @@ public class HistoryFragment extends Fragment {
 
         return rootView;
     }
-
-
     private List<FuelRecord> readJsonFile() {
         List<FuelRecord> fuelRecords = new ArrayList<>();
         String filePath = getContext().getExternalFilesDir(null) + "/fuel_record.json";

@@ -1,6 +1,6 @@
 package com.example.used_fuel;
 
-public class FuelRecord {
+public class FuelRecord implements Comparable<FuelRecord> {
     private String averageKmByGal;
     private String averageKmByLI;
     private String averageMiByGal;
@@ -99,6 +99,11 @@ public class FuelRecord {
 
     public void setPriceByLiter(String priceByLiter) {
         this.priceByLiter = priceByLiter;
+    }
+
+    @Override
+    public int compareTo(FuelRecord o) {
+        return o.getDate().compareTo(this.getDate());
     }
 // Agrega getters y setters
 }

@@ -29,6 +29,7 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
         FuelRecord fuelRecord = fuelRecords.get(position);
 
         holder.txtDate.setText(fuelRecord.getDate().toString());
+        holder.txtDistancia.setText(fuelRecord.getDistanceKM().toString() + " KM");
         holder.txtKMG.setText(fuelRecord.getAverageKmByGal().toString() + " KM/G");
         holder.txtMPG.setText(fuelRecord.getAverageMiByGal().toString() + " MI/G");
         holder.txtKPL.setText(fuelRecord.getAverageKmByLI().toString() + " KM/L");
@@ -52,6 +53,7 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
         TextView txtGalonesUsado;
         TextView txtLitrosUsado;
         TextView txtDineroGastado;
+        TextView txtDistancia;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +64,7 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
             txtGalonesUsado = itemView.findViewById(R.id.txtGalonesUsado);
             txtLitrosUsado = itemView.findViewById(R.id.txtLitrosUsados);
             txtDineroGastado = itemView.findViewById(R.id.txtDineroGastado);
+            txtDistancia = itemView.findViewById(R.id.txtDistancia);
         }
     }
 
