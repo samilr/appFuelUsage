@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="#7EA3CC"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="38dp"
             android:layout_marginTop="370dp"
-            android:background="@color/newColor2"
-            app:cardBackgroundColor="@color/newColor"
+            android:background="@color/card"
+            app:cardBackgroundColor="@color/card"
             app:cardCornerRadius="28dp"
             app:cardElevation="4dp">
 
@@ -72,7 +72,7 @@
                 android:layout_height="37dp"
                 android:layout_marginLeft="210dp"
                 android:layout_marginTop="126dp"
-                android:popupBackground="@color/newColor" />
+                android:popupBackground="@color/card" />
 
 
             <TextView
@@ -114,7 +114,7 @@
                 android:layout_height="37dp"
                 android:layout_marginLeft="210dp"
                 android:layout_marginTop="178dp"
-                android:popupBackground="@color/newColor" />
+                android:popupBackground="@color/card" />
 
 
             <TextView
@@ -155,7 +155,7 @@
                 android:layout_height="37dp"
                 android:layout_marginLeft="210dp"
                 android:layout_marginTop="76dp"
-                android:popupBackground="@color/newColor" />
+                android:popupBackground="@color/card" />
 
         </androidx.cardview.widget.CardView>
 
@@ -164,7 +164,7 @@
             android:layout_height="277dp"
             android:layout_marginLeft="38dp"
             android:layout_marginTop="60dp"
-            app:cardBackgroundColor="@color/newColor"
+            app:cardBackgroundColor="@color/card"
             app:cardCornerRadius="28dp"
             app:cardElevation="4dp">
 
@@ -354,7 +354,6 @@
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
-
 
         <Button
             android:id="@+id/btnPdf"

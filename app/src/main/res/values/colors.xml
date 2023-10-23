@@ -9,5 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="newColor">#D81B1B</color>
     <color name="newColor2">#E11B09B9</color>
+    <color name="back">#7EA3CC</color>
+    <color name="card">#262626</color>
+    <color name="buttons">#E11B09B9</color>
     <color name="trans">#001B09B9</color>
 </resources>
