@@ -1,4 +1,4 @@
-package com.example.used_fuel;
+package com.example.used_fuel.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.used_fuel.FuelRecord;
+import com.example.used_fuel.R;
 
 import java.util.List;
 

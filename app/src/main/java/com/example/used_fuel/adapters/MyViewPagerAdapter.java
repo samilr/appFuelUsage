@@ -1,4 +1,4 @@
-package com.example.used_fuel;
+package com.example.used_fuel.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

@@ -12,14 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.used_fuel.FuelRecord;
-import com.example.used_fuel.FuelRecordAdapter;
+import com.example.used_fuel.adapters.FuelRecordAdapter;
 import com.example.used_fuel.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
