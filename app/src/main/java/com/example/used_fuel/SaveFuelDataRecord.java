@@ -4,7 +4,13 @@ import android.os.Environment;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
@@ -43,22 +49,32 @@ public class SaveFuelDataRecord {
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.used_fuel/files/fuel_record.json";
             File file = new File(path);
             boolean fileExists = file.exists();
-            FileWriter fileWriter = new FileWriter(path, fileExists);
 
             if (!fileExists) {
-                fileWriter.write("[\n");
+                JSONArray jsonArray = new JSONArray();
+                jsonArray.put(new JSONObject(jsonData));
+                FileWriter fileWriter = new FileWriter(path);
+                fileWriter.write(jsonArray.toString(4));  // 4 es el número de espacios para la indentación
+                fileWriter.close();
             } else {
-                fileWriter.write(",\n");
-            }
+                // Lee el archivo JSON existente y agrega el nuevo JSON al array existente
+                BufferedReader br = new BufferedReader(new FileReader(path));
+                StringBuilder content = new StringBuilder();
+                String line;
+                while ((line = br.readLine()) != null) {
+                    content.append(line);
+                }
 
-            fileWriter.write(jsonData);
-            fileWriter.close();
-            if (fileExists) {
-                FileWriter closingBracketWriter = new FileWriter(path, true);
-                closingBracketWriter.write("]");
-                closingBracketWriter.close();
+                JSONArray jsonArray = new JSONArray(content.toString());
+                jsonArray.put(new JSONObject(jsonData));
+
+                FileWriter fileWriter = new FileWriter(path);
+                fileWriter.write(jsonArray.toString(4));  // 4 es el número de espacios para la indentación
+                fileWriter.close();
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
