@@ -36,8 +36,8 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
         holder.txtKMG.setText(fuelRecord.getAverageKmByGal().toString() + " KM/G");
         holder.txtMPG.setText(fuelRecord.getAverageMiByGal().toString() + " MI/G");
         holder.txtKPL.setText(fuelRecord.getAverageKmByLI().toString() + " KM/L");
-        holder.txtGalonesUsado.setText(fuelRecord.getFuelUsedGal().toString() + " GALONES");
-        holder.txtLitrosUsado.setText(fuelRecord.getFuelUsedLiters().toString() + " LITROS");
+        holder.txtGalonesUsado.setText(fuelRecord.getFuelUsedGal().toString() + " GAL");
+        holder.txtLitrosUsado.setText(fuelRecord.getFuelUsedLiters().toString() + " LI");
         holder.txtDineroGastado.setText("$" + fuelRecord.getMoneyUsed().toString() + " DOP");
 
         // Configura los demás campos de FuelRecord de la misma manera
