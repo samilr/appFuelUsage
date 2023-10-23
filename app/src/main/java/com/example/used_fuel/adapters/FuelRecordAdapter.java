@@ -40,7 +40,6 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
         holder.txtLitrosUsado.setText(fuelRecord.getFuelUsedLiters().toString() + " LI");
         holder.txtDineroGastado.setText("$" + fuelRecord.getMoneyUsed().toString() + " DOP");
 
-        // Configura los demás campos de FuelRecord de la misma manera
     }
 
     @Override

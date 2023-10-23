@@ -43,7 +43,10 @@ public class FuelCalculatorFragment extends Fragment {
 
         // Llama al método appComponets() después de inflar el diseño
         appComponets(rootView);
-
+         if (!hasPermision()){
+             Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+             startActivity(intent);
+         }
         btnCalcular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,6 +182,9 @@ public class FuelCalculatorFragment extends Fragment {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
                 saveFuelDataRecord.saveDataAsJSON();
                 Toast.makeText(requireContext(), "Guardado correctamente.", Toast.LENGTH_SHORT).show();
+            }else {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivity(intent);
             }
         }
     }
@@ -209,7 +215,7 @@ public class FuelCalculatorFragment extends Fragment {
                     String.valueOf(gasPriceByGal),
                     String.valueOf(gasPriceByLiter));
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
+            if (hasPermision()) {
                 classGeneratePdf.generatePDF();
                 sharePdf(classGeneratePdf);
             } else {
@@ -262,6 +268,9 @@ public class FuelCalculatorFragment extends Fragment {
                 || txbfuelUsed.getText().toString().isEmpty()
                 || txbMoneyUsed.getText().toString().isEmpty()
                 || txbKilometerByLiters.getText().toString().isEmpty();
+    }
+    public boolean hasPermision(){
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager();
     }
 
 }
