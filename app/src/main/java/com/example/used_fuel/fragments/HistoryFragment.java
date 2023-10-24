@@ -53,17 +53,14 @@ public class HistoryFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             List<FuelRecord> refreshedData = readJsonFile();
             Collections.sort(refreshedData);
-            adapter.setData(refreshedData);
-            adapter.notifyDataSetChanged();
-
-            // Verifica y configura la visibilidad de txtNotFound después de la actualización
             if (refreshedData.isEmpty()) {
                 txtNotFound.setVisibility(View.VISIBLE);
             } else {
                 txtNotFound.setVisibility(View.GONE);
             }
-
             Toast.makeText(requireContext(), "Datos actualizados.", Toast.LENGTH_SHORT).show();
+            adapter.setData(refreshedData);
+            adapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
         });
 
@@ -74,13 +71,11 @@ public class HistoryFragment extends Fragment {
                 showDatePickerDialog();
             }
         });
-
         if (fuelRecords.isEmpty()) {
             txtNotFound.setVisibility(View.VISIBLE);
         } else {
             txtNotFound.setVisibility(View.GONE);
         }
-
         return rootView;
     }
     private List<FuelRecord> readJsonFile() {
@@ -108,8 +103,6 @@ public class HistoryFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar selectedDate = Calendar.getInstance();
                         selectedDate.set(year, monthOfYear, dayOfMonth);
-
-                        // Filtra el RecyclerView con la fecha seleccionada
                         filterRecyclerView(selectedDate);
                     }
                 },
@@ -133,14 +126,12 @@ public class HistoryFragment extends Fragment {
                 filteredFuelRecords.add(record);
             }
         }
-        adapter.setData(filteredFuelRecords);
-        adapter.notifyDataSetChanged();
-
-        // Muestra u oculta el mensaje "No se encontraron datos" después de aplicar el filtro
         if (filteredFuelRecords.isEmpty()) {
             txtNotFound.setVisibility(View.VISIBLE);
         } else {
             txtNotFound.setVisibility(View.GONE);
         }
+        adapter.setData(filteredFuelRecords);
+        adapter.notifyDataSetChanged();
     }
 }
