@@ -43,10 +43,6 @@ public class FuelCalculatorFragment extends Fragment {
 
         // Llama al método appComponets() después de inflar el diseño
         appComponets(rootView);
-         if (!hasPermision()){
-             Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-             startActivity(intent);
-         }
         btnCalcular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,12 +175,11 @@ public class FuelCalculatorFragment extends Fragment {
                     String.valueOf(moneyUsed),
                     String.valueOf(gasPriceByGal),
                     String.valueOf(gasPriceByLiter));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
+            if (hasPermision()) {
                 saveFuelDataRecord.saveDataAsJSON();
                 Toast.makeText(requireContext(), "Guardado correctamente.", Toast.LENGTH_SHORT).show();
             }else {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                startActivity(intent);
+                askPermision();
             }
         }
     }
@@ -203,24 +198,22 @@ public class FuelCalculatorFragment extends Fragment {
             Toast.makeText(getContext(), "Complete los campos para continuar", Toast.LENGTH_SHORT).show();
         }else{
             formatValues();
-            GeneratePDF classGeneratePdf = new GeneratePDF(
-                    String.valueOf(distance),
-                    String.valueOf(distanceMI),
-                    String.valueOf(kilometerByGal),
-                    String.valueOf(millesByGal),
-                    String.valueOf(kilometerByLiters),
-                    String.valueOf(usedFuelGal),
-                    String.valueOf(usedFuelLiters),
-                    String.valueOf(moneyUsed),
-                    String.valueOf(gasPriceByGal),
-                    String.valueOf(gasPriceByLiter));
-
             if (hasPermision()) {
+                GeneratePDF classGeneratePdf = new GeneratePDF(
+                        String.valueOf(distance),
+                        String.valueOf(distanceMI),
+                        String.valueOf(kilometerByGal),
+                        String.valueOf(millesByGal),
+                        String.valueOf(kilometerByLiters),
+                        String.valueOf(usedFuelGal),
+                        String.valueOf(usedFuelLiters),
+                        String.valueOf(moneyUsed),
+                        String.valueOf(gasPriceByGal),
+                        String.valueOf(gasPriceByLiter));
                 classGeneratePdf.generatePDF();
                 sharePdf(classGeneratePdf);
             } else {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                startActivity(intent);
+                askPermision();
             }
         }
     }
@@ -271,6 +264,12 @@ public class FuelCalculatorFragment extends Fragment {
     }
     public boolean hasPermision(){
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager();
+    }
+    public void askPermision(){
+        if (!hasPermision()){
+            Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+            startActivity(intent);
+        }
     }
 
 }
