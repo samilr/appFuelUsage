@@ -36,7 +36,7 @@
             android:width="30dp"
             android:height="10dp"
             android:backgroundTint="@color/newColor"
-            android:hint="DISTANCIA:"
+            android:hint="DISTANCIA EN KM:"
             android:inputType="numberDecimal"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
