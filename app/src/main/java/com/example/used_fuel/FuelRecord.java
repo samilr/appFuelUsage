@@ -1,10 +1,12 @@
 package com.example.used_fuel;
 
+import java.util.Date;
+
 public class FuelRecord implements Comparable<FuelRecord> {
     private String averageKmByGal;
     private String averageKmByLI;
     private String averageMiByGal;
-    private String date;
+    private Date date;
     private String distanceKM;
     private String distanceMI;
     private String fuelUsedGal;
@@ -37,11 +39,11 @@ public class FuelRecord implements Comparable<FuelRecord> {
         this.averageMiByGal = averageMiByGal;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -1,9 +1,12 @@
 package com.example.used_fuel.fragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -21,37 +24,47 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-
 public class HistoryFragment extends Fragment {
+    List<FuelRecord> fuelRecords;
+    List<FuelRecord> filteredFuelRecords;
+    RecyclerView recyclerView;
+    FuelRecordAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.history, container, false);
-        List<FuelRecord> fuelRecords = readJsonFile();
+        fuelRecords = readJsonFile();
         Collections.sort(fuelRecords);
-        RecyclerView recyclerView = rootView.findViewById(R.id.rvHistory);
-        FuelRecordAdapter adapter = new FuelRecordAdapter(fuelRecords);
+        recyclerView = rootView.findViewById(R.id.rvHistory);
+        adapter = new FuelRecordAdapter(fuelRecords);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         SwipeRefreshLayout swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            List<FuelRecord> refreshedData = readJsonFile();
+            Collections.sort(refreshedData);
+            adapter.setData(refreshedData);
+            adapter.notifyDataSetChanged();
+            Toast.makeText(requireContext(), "Datos actualizados.", Toast.LENGTH_SHORT).show();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
+        Button btnDatePicker = rootView.findViewById(R.id.btnDatePicker);
+        btnDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                // Realiza la operación de recarga de datos aquí, por ejemplo, volver a leer el archivo JSON
-                List<FuelRecord> refreshedData = readJsonFile();
-                Collections.sort(refreshedData);
-                adapter.setData(refreshedData);
-                adapter.notifyDataSetChanged();
-                Toast.makeText(requireContext(), "Datos actualizados.", Toast.LENGTH_SHORT).show();
-                swipeRefreshLayout.setRefreshing(false); // Detener la animación de actualización
+            public void onClick(View v) {
+                showDatePickerDialog();
             }
         });
 
         return rootView;
     }
+
     private List<FuelRecord> readJsonFile() {
         List<FuelRecord> fuelRecords = new ArrayList<>();
         String filePath = getContext().getExternalFilesDir(null) + "/fuel_record.json";
@@ -69,4 +82,40 @@ public class HistoryFragment extends Fragment {
         return fuelRecords;
     }
 
+    private void showDatePickerDialog() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                requireContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        Calendar selectedDate = Calendar.getInstance();
+                        selectedDate.set(year, monthOfYear, dayOfMonth);
+
+                        // Filtra el RecyclerView con la fecha seleccionada
+                        filterRecyclerView(selectedDate);
+                    }
+                },
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
+
+    private void filterRecyclerView(Calendar selectedDate) {
+        filteredFuelRecords = new ArrayList<>();
+
+        for (FuelRecord record : fuelRecords) {
+            Calendar recordDate = Calendar.getInstance();
+            recordDate.setTime(record.getDate());
+
+            if (recordDate.get(Calendar.YEAR) == selectedDate.get(Calendar.YEAR) &&
+                    recordDate.get(Calendar.MONTH) == selectedDate.get(Calendar.MONTH) &&
+                    recordDate.get(Calendar.DAY_OF_MONTH) == selectedDate.get(Calendar.DAY_OF_MONTH)) {
+                filteredFuelRecords.add(record);
+            }
+        }
+        adapter.setData(filteredFuelRecords);
+        adapter.notifyDataSetChanged();
+    }
 }

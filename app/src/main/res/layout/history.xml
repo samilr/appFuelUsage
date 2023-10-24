@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/btnDatePicker"
+        android:layout_width="58dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="350dp"
+        android:gravity="right"
+        app:icon="@drawable/baseline_calendar_month_24" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHistory"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="694dp"
+        android:layout_marginTop="40dp" />
+</FrameLayout>
+
+
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

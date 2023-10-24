@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.used_fuel.FuelRecord;
 import com.example.used_fuel.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.ViewHolder> {
     private List<FuelRecord> fuelRecords;
@@ -30,8 +33,7 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FuelRecord fuelRecord = fuelRecords.get(position);
-
-        holder.txtDate.setText(fuelRecord.getDate().toString());
+        holder.txtDate.setText(formatDate(fuelRecord.getDate()));
         holder.txtDistancia.setText(fuelRecord.getDistanceKM().toString() + " KM");
         holder.txtKMG.setText(fuelRecord.getAverageKmByGal().toString() + " KM/G");
         holder.txtMPG.setText(fuelRecord.getAverageMiByGal().toString() + " MI/G");
@@ -39,7 +41,6 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
         holder.txtGalonesUsado.setText(fuelRecord.getFuelUsedGal().toString() + " GAL");
         holder.txtLitrosUsado.setText(fuelRecord.getFuelUsedLiters().toString() + " LI");
         holder.txtDineroGastado.setText("$" + fuelRecord.getMoneyUsed().toString() + " DOP");
-
     }
 
     @Override
@@ -70,7 +71,12 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
         }
     }
 
+
     public void setData(List<FuelRecord> fuelRecords) {
         this.fuelRecords = fuelRecords;
+    }
+    public String formatDate(Date fecha){
+        SimpleDateFormat formato =new SimpleDateFormat("MMM dd, yyyy h:mm a", Locale.ENGLISH);
+        return formato.format(fecha);
     }
 }
