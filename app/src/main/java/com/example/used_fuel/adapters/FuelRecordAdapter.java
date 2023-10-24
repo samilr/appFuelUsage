@@ -58,6 +58,7 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
         TextView txtDineroGastado;
         TextView txtDistancia;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtDate = itemView.findViewById(R.id.txtDate);
@@ -68,9 +69,9 @@ public class FuelRecordAdapter extends RecyclerView.Adapter<FuelRecordAdapter.Vi
             txtLitrosUsado = itemView.findViewById(R.id.txtLitrosUsados);
             txtDineroGastado = itemView.findViewById(R.id.txtDineroGastado);
             txtDistancia = itemView.findViewById(R.id.txtDistancia);
+
         }
     }
-
 
     public void setData(List<FuelRecord> fuelRecords) {
         this.fuelRecords = fuelRecords;

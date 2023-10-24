@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -33,13 +34,17 @@ public class HistoryFragment extends Fragment {
     List<FuelRecord> filteredFuelRecords;
     RecyclerView recyclerView;
     FuelRecordAdapter adapter;
+    TextView txtNotFound;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.history, container, false);
         fuelRecords = readJsonFile();
         Collections.sort(fuelRecords);
+
         recyclerView = rootView.findViewById(R.id.rvHistory);
+        txtNotFound = rootView.findViewById(R.id.txtNotFound);
+
         adapter = new FuelRecordAdapter(fuelRecords);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -50,6 +55,14 @@ public class HistoryFragment extends Fragment {
             Collections.sort(refreshedData);
             adapter.setData(refreshedData);
             adapter.notifyDataSetChanged();
+
+            // Verifica y configura la visibilidad de txtNotFound después de la actualización
+            if (refreshedData.isEmpty()) {
+                txtNotFound.setVisibility(View.VISIBLE);
+            } else {
+                txtNotFound.setVisibility(View.GONE);
+            }
+
             Toast.makeText(requireContext(), "Datos actualizados.", Toast.LENGTH_SHORT).show();
             swipeRefreshLayout.setRefreshing(false);
         });
@@ -62,9 +75,14 @@ public class HistoryFragment extends Fragment {
             }
         });
 
+        if (fuelRecords.isEmpty()) {
+            txtNotFound.setVisibility(View.VISIBLE);
+        } else {
+            txtNotFound.setVisibility(View.GONE);
+        }
+
         return rootView;
     }
-
     private List<FuelRecord> readJsonFile() {
         List<FuelRecord> fuelRecords = new ArrayList<>();
         String filePath = getContext().getExternalFilesDir(null) + "/fuel_record.json";
@@ -117,5 +135,12 @@ public class HistoryFragment extends Fragment {
         }
         adapter.setData(filteredFuelRecords);
         adapter.notifyDataSetChanged();
+
+        // Muestra u oculta el mensaje "No se encontraron datos" después de aplicar el filtro
+        if (filteredFuelRecords.isEmpty()) {
+            txtNotFound.setVisibility(View.VISIBLE);
+        } else {
+            txtNotFound.setVisibility(View.GONE);
+        }
     }
 }
