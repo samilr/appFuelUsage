@@ -330,6 +330,7 @@
             </androidx.cardview.widget.CardView>
 
             <Button
+                android:backgroundTint="@color/card"
                 android:id="@+id/btnCalcular"
                 android:layout_width="161dp"
                 android:layout_height="61dp"
@@ -343,6 +344,7 @@
 
             <Button
                 android:id="@+id/btnReiniciar"
+                android:backgroundTint="@color/card"
                 android:layout_width="161dp"
                 android:layout_height="61dp"
                 android:layout_marginLeft="210dp"
@@ -355,6 +357,7 @@
 
             <Button
                 android:id="@+id/btnPdf"
+                android:backgroundTint="@color/card"
                 android:layout_width="334dp"
                 android:layout_height="61dp"
                 android:layout_marginLeft="38dp"
