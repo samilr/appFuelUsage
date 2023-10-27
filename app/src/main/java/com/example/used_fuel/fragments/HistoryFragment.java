@@ -1,6 +1,7 @@
 package com.example.used_fuel.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class HistoryFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.rvHistory);
         txtNotFound = rootView.findViewById(R.id.txtNotFound);
 
-        adapter = new FuelRecordAdapter(fuelRecords);
+        adapter = new FuelRecordAdapter(fuelRecords, getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -134,4 +135,5 @@ public class HistoryFragment extends Fragment {
         adapter.setData(filteredFuelRecords);
         adapter.notifyDataSetChanged();
     }
+
 }

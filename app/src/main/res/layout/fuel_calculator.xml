@@ -158,6 +158,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewResult"
                 android:layout_width="334dp"
                 android:layout_height="277dp"
                 android:layout_marginLeft="38dp"
@@ -176,9 +177,14 @@
                     android:textColor="@color/white"
                     android:textSize="30dp"
                     android:textStyle="bold">
-
                 </TextView>
-
+                <Button
+                    android:id="@+id/btnSaveImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="260dp"
+                    android:backgroundTint="@color/trans"
+                    android:text="S" />
                 <TextView
                     android:id="@+id/txt1"
                     android:layout_width="177dp"

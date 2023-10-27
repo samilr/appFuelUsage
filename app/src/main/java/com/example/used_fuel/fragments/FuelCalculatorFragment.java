@@ -1,8 +1,12 @@
 package com.example.used_fuel.fragments;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import android.os.Environment;
@@ -21,6 +25,8 @@ import com.example.used_fuel.GeneratePDF;
 import com.example.used_fuel.R;
 import com.example.used_fuel.SaveFuelDataRecord;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -28,8 +34,9 @@ import java.util.Objects;
 public class FuelCalculatorFragment extends Fragment {
     EditText txbDistance, txbKmByLitros, txbPrice;
     TextView txbMillesByGal, txbKilometerByGal, txbfuelUsed, txbMoneyUsed, txbKilometerByLiters;
+    CardView cardViewResult;
     Spinner spMesureUnity, spDistanceUnity, spGasUnity;
-    Button btnCalcular, btnPdf, btnReiniciar;
+    Button btnCalcular, btnPdf, btnReiniciar, btnShareImage;
     double averageFuelUsed, usedFuelLiters, millesByGal, distance, distanceMI, moneyUsed, usedFuelGal, kilometerByGal, kilometerByLiters;
     double litersKilometersToGalon = 3.785411784, kilometerToMilles = 0.621371, millesToKilometer = 1.60934, gasPriceByGal, gasPriceByLiter = gasPriceByGal / litersKilometersToGalon;
     List<String> mesureUnity = Arrays.asList("(KM/L)", "(KM/G)", "(MI/G)", "(GAL)");
@@ -63,6 +70,16 @@ public class FuelCalculatorFragment extends Fragment {
                 makePdf();
             }
         });
+        btnShareImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isDataEmpty()){
+                    captureAndShareCardView(cardViewResult);
+                }else {
+                    Toast.makeText(requireContext(), "Primero debe realizar un calculo.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         return rootView;
     }
     public void appComponets(View rootView){
@@ -80,6 +97,8 @@ public class FuelCalculatorFragment extends Fragment {
         txbPrice = rootView.findViewById(R.id.txbPrice);
         spGasUnity = rootView.findViewById(R.id.spGasUnity);
         txbKilometerByLiters = rootView.findViewById(R.id.txbKPL);
+        btnShareImage = rootView.findViewById(R.id.btnSaveImage);
+        cardViewResult = rootView.findViewById(R.id.cardViewResult);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
                 R.layout.spinner_item, mesureUnity);
@@ -271,5 +290,49 @@ public class FuelCalculatorFragment extends Fragment {
             startActivity(intent);
         }
     }
+    private Bitmap viewToBitmap(View view) {
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
+    }
+    private String saveBitmapToStorage(Bitmap bitmap) {
+        String imagePath = "";
+        try {
+            File file = new File(getContext().getExternalCacheDir(), "cardview_capture.png");
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+            imagePath = file.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imagePath;
+    }
+    private void shareImage(String imagePath) {
+        File imageFile = new File(imagePath);
+        Uri imageUri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", imageFile);
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(shareIntent, "Compartir captura de pantalla"));
+    }
+    private void captureAndShareCardView(View viewToCapture) {
+        btnShareImage.setVisibility(View.GONE);
+        // Captura la vista como una imagen
+        Bitmap bitmap = viewToBitmap(viewToCapture);
+
+        // Guarda la imagen en la memoria
+        String imagePath = saveBitmapToStorage(bitmap);
+
+        // Comparte la imagen
+        shareImage(imagePath);
+        btnShareImage.setVisibility(View.VISIBLE);
+    }
+
+
 
 }
