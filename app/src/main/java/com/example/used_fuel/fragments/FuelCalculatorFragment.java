@@ -118,6 +118,12 @@ public class FuelCalculatorFragment extends Fragment {
         txbMoneyUsed.setEnabled(false);
         txbKilometerByLiters.setEnabled(false);
         txbPrice.setText("293.10");
+
+        if (isDataEmpty()) {
+            btnShareImage.setVisibility(View.GONE);
+        } else {
+            btnShareImage.setVisibility(View.VISIBLE);
+        }
     }
     public void calculateFuelUsed(){
         if (isInputEmpty()){
@@ -151,6 +157,11 @@ public class FuelCalculatorFragment extends Fragment {
                     averageFuelUsed /= litersKilometersToGalon;
                     getData(distance, averageFuelUsed);
                     break;
+            }
+            if (isDataEmpty()) {
+                btnShareImage.setVisibility(View.GONE);
+            } else {
+                btnShareImage.setVisibility(View.VISIBLE);
             }
             saveData();
         }
@@ -211,6 +222,7 @@ public class FuelCalculatorFragment extends Fragment {
         txbDistance.setText("");
         txbKmByLitros.setText("");
         txbPrice.setText("293.10");
+        btnShareImage.setVisibility(View.GONE);
     }
     public void makePdf(){
         if (isDataEmpty()){

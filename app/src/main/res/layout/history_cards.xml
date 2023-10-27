@@ -18,11 +18,12 @@
 
         <Button
             android:id="@+id/btnShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="260dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="275dp"
             android:backgroundTint="@color/trans"
-            android:text="S" />
+            app:iconTint="@color/white"
+            app:icon="@drawable/baseline_share_24"/>
 
         <TextView
             android:id="@+id/txtDate"
@@ -33,7 +34,7 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20dp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt1"
