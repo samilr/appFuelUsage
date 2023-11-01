@@ -52,12 +52,11 @@ public class GeneratePDF {
     public void generatePDF(){
         Document document = new Document();
         try {
-            this.pdfFileName = "REPORTE DE CONSUMO " + currrentDate;
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.used_fuel/files/" + this.pdfFileName + ".pdf";
+            this.pdfFileName = "REPORTE_DE_CONSUMO";
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+                    + "/Android/data/com.example.used_fuel/files/" + this.pdfFileName + ".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(path));
             PdfPTable table = new PdfPTable(2);
-           // Image image = Image.getInstance("ruta/de/tu/imagen.png");
-
             document.open();
 
             Paragraph title = new Paragraph("CONSUMO DE COMBUSTIBLE SG " + currrentDate);

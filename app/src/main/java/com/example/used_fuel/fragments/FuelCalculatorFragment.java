@@ -121,8 +121,10 @@ public class FuelCalculatorFragment extends Fragment {
 
         if (isDataEmpty()) {
             btnShareImage.setVisibility(View.GONE);
+            btnPdf.setVisibility(View.GONE);
         } else {
             btnShareImage.setVisibility(View.VISIBLE);
+            btnPdf.setVisibility(View.VISIBLE);
         }
     }
     public void calculateFuelUsed(){
@@ -160,8 +162,10 @@ public class FuelCalculatorFragment extends Fragment {
             }
             if (isDataEmpty()) {
                 btnShareImage.setVisibility(View.GONE);
+                btnPdf.setVisibility(View.GONE);
             } else {
                 btnShareImage.setVisibility(View.VISIBLE);
+                btnPdf.setVisibility(View.VISIBLE);
             }
             saveData();
         }
@@ -277,7 +281,7 @@ public class FuelCalculatorFragment extends Fragment {
         compartirIntent.setType("application/pdf");
         File directorio = requireContext().getExternalFilesDir(null);
         File archivoPDF = new File(directorio, generatePDF.getPdfFileName() + ".pdf");
-        Uri uri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".fileprovider", archivoPDF);
+        Uri uri = FileProvider.getUriForFile(getContext(), "com.example.used_fuel.provider", archivoPDF);
         compartirIntent.putExtra(Intent.EXTRA_STREAM, uri);
         startActivity(Intent.createChooser(compartirIntent, "Compartir archivo PDF"));
     }
@@ -334,6 +338,7 @@ public class FuelCalculatorFragment extends Fragment {
     }
     private void captureAndShareCardView(View viewToCapture) {
         btnShareImage.setVisibility(View.GONE);
+        btnPdf.setVisibility(View.GONE);
         // Captura la vista como una imagen
         Bitmap bitmap = viewToBitmap(viewToCapture);
 
@@ -343,6 +348,7 @@ public class FuelCalculatorFragment extends Fragment {
         // Comparte la imagen
         shareImage(imagePath);
         btnShareImage.setVisibility(View.VISIBLE);
+        btnPdf.setVisibility(View.VISIBLE);
     }
 
 

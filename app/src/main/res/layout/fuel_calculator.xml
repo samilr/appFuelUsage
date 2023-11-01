@@ -9,7 +9,6 @@
     tools:context=".MainActivity">
 
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/back">
@@ -187,6 +186,14 @@
                     android:backgroundTint="@color/trans"
                     app:iconTint="@color/white"
                     app:icon="@drawable/baseline_share_24"/>
+                <Button
+                    android:id="@+id/btnPdf"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/trans"
+                    app:iconTint="@color/white"
+                    app:icon="@drawable/baseline_picture_as_pdf_24"/>
                 <TextView
                     android:id="@+id/txt1"
                     android:layout_width="177dp"
@@ -338,43 +345,33 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:backgroundTint="@color/card"
                 android:id="@+id/btnCalcular"
-                android:layout_width="161dp"
-                android:layout_height="61dp"
+                android:scaleType="center"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="38dp"
                 android:layout_marginTop="585dp"
+                android:backgroundTint="@color/card"
                 android:onClick="calculateFuelUsed"
-                android:text="CALCULAR"
+                app:icon="@drawable/baseline_calculate_24"
+                app:iconTint="@color/white"
                 android:textColor="@color/white"
-                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnReiniciar"
                 android:backgroundTint="@color/card"
-                android:layout_width="161dp"
-                android:layout_height="61dp"
-                android:layout_marginLeft="210dp"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="270dp"
                 android:layout_marginTop="585dp"
                 android:onClick="restartApp"
-                android:text="REINICIAR"
+                app:icon="@drawable/baseline_refresh_24"
+                app:iconTint="@color/white"
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:src="@drawable/baseline_refresh_24"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnPdf"
-                android:backgroundTint="@color/card"
-                android:layout_width="334dp"
-                android:layout_height="61dp"
-                android:layout_marginLeft="38dp"
-                android:layout_marginTop="645dp"
-                android:onClick="makePdf"
-                android:text="PDF"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />
         </FrameLayout>
 
     </ScrollView>
