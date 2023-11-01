@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class GeneratePDF {
-
     private String _distanciaRecorridaKM;
     private String _distanciaRecorridaMI;
     private String _consumoKMG;
@@ -68,8 +67,6 @@ public class GeneratePDF {
 
             document.add(title);
             document.add(new Paragraph(" "));
-
-            Font tableFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14, Font.NORMAL, BaseColor.BLACK);
 
             table.addCell("FECHA:");
             table.addCell(currrentDate);

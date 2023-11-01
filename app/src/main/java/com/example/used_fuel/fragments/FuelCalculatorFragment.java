@@ -32,52 +32,32 @@ import java.util.List;
 import java.util.Objects;
 
 public class FuelCalculatorFragment extends Fragment {
-    EditText txbDistance, txbKmByLitros, txbPrice;
-    TextView txbMillesByGal, txbKilometerByGal, txbfuelUsed, txbMoneyUsed, txbKilometerByLiters;
-    CardView cardViewResult;
-    Spinner spMesureUnity, spDistanceUnity, spGasUnity;
-    Button btnCalcular, btnPdf, btnReiniciar, btnShareImage;
+    private EditText txbDistance, txbKmByLitros, txbPrice;
+    private TextView txbMillesByGal, txbKilometerByGal, txbfuelUsed, txbMoneyUsed, txbKilometerByLiters;
+    private CardView cardViewResult;
+    private Spinner spMesureUnity, spDistanceUnity, spGasUnity;
+    private Button btnCalcular, btnPdf, btnReiniciar, btnShareImage;
     double averageFuelUsed, usedFuelLiters, millesByGal, distance, distanceMI, moneyUsed, usedFuelGal, kilometerByGal, kilometerByLiters;
-    double litersKilometersToGalon = 3.785411784, kilometerToMilles = 0.621371, millesToKilometer = 1.60934, gasPriceByGal, gasPriceByLiter = gasPriceByGal / litersKilometersToGalon;
-    List<String> mesureUnity = Arrays.asList("(KM/L)", "(KM/G)", "(MI/G)", "(GAL)");
-    List<String> distanceUnity = Arrays.asList("(KM)", "(MI)");
-    List<String> gasUnity = Arrays.asList("(GAL)", "(LI)");
-    String mesureUnityChoseen, distanceUnityChoosen, gasUnityChoseen;
+    private final double litersKilometersToGalon = 3.785411784;
+    private final double kilometerToMilles = 0.621371;
+    private final double millesToKilometer = 1.60934;
+    private double gasPriceByGal, gasPriceByLiter = gasPriceByGal / litersKilometersToGalon;
+    private List<String> mesureUnity = Arrays.asList("(KM/L)", "(KM/G)", "(MI/G)", "(GAL)");
+    private List<String> distanceUnity = Arrays.asList("(KM)", "(MI)");
+    private List<String> gasUnity = Arrays.asList("(GAL)", "(LI)");
+    private String mesureUnityChoseen, distanceUnityChoosen, gasUnityChoseen;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Infla el diseño del fragmento
         View rootView = inflater.inflate(R.layout.fuel_calculator, container, false);
-
-        // Llama al método appComponets() después de inflar el diseño
         appComponets(rootView);
-        btnCalcular.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calculateFuelUsed();
-            }
-        });
-
-        btnReiniciar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                restartApp();
-            }
-        });
-
-        btnPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makePdf();
-            }
-        });
-        btnShareImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isDataEmpty()){
-                    captureAndShareCardView(cardViewResult);
-                }else {
-                    Toast.makeText(requireContext(), "Primero debe realizar un calculo.", Toast.LENGTH_SHORT).show();
-                }
+        btnCalcular.setOnClickListener(v -> calculateFuelUsed());
+        btnReiniciar.setOnClickListener(v -> restartApp());
+        btnPdf.setOnClickListener(v -> makePdf());
+        btnShareImage.setOnClickListener(v -> {
+            if (!isDataEmpty()){
+                captureAndShareCardView(cardViewResult);
+            }else {
+                Toast.makeText(requireContext(), "Primero debe realizar un calculo.", Toast.LENGTH_SHORT).show();
             }
         });
         return rootView;
@@ -214,6 +194,7 @@ public class FuelCalculatorFragment extends Fragment {
                 Toast.makeText(requireContext(), "Guardado correctamente.", Toast.LENGTH_SHORT).show();
             }else {
                 askPermision();
+                saveData();
             }
         }
     }
@@ -350,7 +331,4 @@ public class FuelCalculatorFragment extends Fragment {
         btnShareImage.setVisibility(View.VISIBLE);
         btnPdf.setVisibility(View.VISIBLE);
     }
-
-
-
 }
