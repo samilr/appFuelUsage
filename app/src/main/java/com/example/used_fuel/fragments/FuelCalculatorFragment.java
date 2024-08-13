@@ -42,7 +42,7 @@ public class FuelCalculatorFragment extends Fragment {
     private final double kilometerToMilles = 0.621371;
     private final double millesToKilometer = 1.60934;
     private double gasPriceByGal, gasPriceByLiter = gasPriceByGal / litersKilometersToGalon;
-    private List<String> mesureUnity = Arrays.asList("(KM/L)", "(KM/G)", "(MI/G)", "(GAL)");
+    private List<String> mesureUnity = Arrays.asList("(KM/L)", "(KM/G)", "(MI/G)", "(L/100KM)", "(GAL)");
     private List<String> distanceUnity = Arrays.asList("(KM)", "(MI)");
     private List<String> gasUnity = Arrays.asList("(GAL)", "(LI)");
     private String mesureUnityChoseen, distanceUnityChoosen, gasUnityChoseen;
@@ -97,7 +97,7 @@ public class FuelCalculatorFragment extends Fragment {
         txbfuelUsed.setEnabled(false);
         txbMoneyUsed.setEnabled(false);
         txbKilometerByLiters.setEnabled(false);
-        txbPrice.setText("293.10");
+        txbPrice.setText("291.10");
 
         if (isDataEmpty()) {
             btnShareImage.setVisibility(View.GONE);
@@ -125,6 +125,9 @@ public class FuelCalculatorFragment extends Fragment {
                 case "(KM/L)":
                     getData(distance, averageFuelUsed);
                     break;
+                case "(L/100KM)":
+                    averageFuelUsed = 100 / averageFuelUsed;
+
                 case "(KM/G)":
                     averageFuelUsed /= litersKilometersToGalon;
                     getData(distance, averageFuelUsed);
