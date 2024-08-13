@@ -27,8 +27,12 @@ public class MainActivity extends AppCompatActivity {
     Spinner spMesureUnity, spDistanceUnity, spGasUnity;
     Button btnCalcular, btnPdf;
     double averageFuelUsed, usedFuelLiters, millesByGal, distance, distanceMI, moneyUsed, usedFuelGal, kilometerByGal, kilometerByLiters;
-    double litersKilometersToGalon = 3.785411784, kilometerToMilles = 0.621371, millesToKilometer = 1.60934, gasPriceByGal, gasPriceByLiter = gasPriceByGal / litersKilometersToGalon;
-    List<String> mesureUnity = Arrays.asList("(KM/L)", "(KM/G)", "(MI/G)", "(GAL)");
+    double litersKilometersToGalon = 3.785411784;
+    final double kilometerToMilles = 0.621371;
+    final double millesToKilometer = 1.60934;
+    double gasPriceByGal;
+    double gasPriceByLiter = gasPriceByGal / litersKilometersToGalon;
+    List<String> mesureUnity = Arrays.asList("(KM/L)", "(L/100KM)", "(KM/G)", "(MI/G)", "(GAL)");
     List<String> distanceUnity = Arrays.asList("(KM)", "(MI)");
     List<String> gasUnity = Arrays.asList("(GAL)", "(LI)");
     String mesureUnityChoseen, distanceUnityChoosen, gasUnityChoseen;
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         txbfuelUsed.setEnabled(false);
         txbMoneyUsed.setEnabled(false);
         txbKilometerByLiters.setEnabled(false);
-        txbPrice.setText("293.10");
+        txbPrice.setText("291.10");
     }
     public void calculateFuelUsed(View view){
         if (isInputEmpty()){
@@ -93,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
             }
             switch (mesureUnityChoseen){
                 case "(KM/L)":
+                    getData(distance, averageFuelUsed);
+                    break;
+                case "(L/100KM)":
+                    averageFuelUsed =  100 / averageFuelUsed;
                     getData(distance, averageFuelUsed);
                     break;
                 case "(KM/G)":
